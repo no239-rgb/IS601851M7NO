@@ -1,0 +1,36 @@
+name: Run Tests and Build Docker Image
+
+on:
+  push:
+    branches:
+      - main  # Run on any push to the main branch
+  pull_request:
+    branches:
+      - main  # Run on any pull request targeting main
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov
+
+      - name: Run tests with pytest and enforce coverage
+        run: |
+          pytest --cov=main --cov-fail-under=90 --cov-report=term-missing
+
+      - name: Build Docker Image
+        run: |
+          docker build -t nosaomoregie/qr_codemaker:latest .
