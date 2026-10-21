@@ -158,7 +158,7 @@ class TestMainWorkflow:
     cli_test_cases = {
         "default_args": {
             "args": [],
-            "expected_url": "https://github.com/kaw393939",
+            "expected_url": "https://github.com/no239-rgb/IS601851M7NO",
         },
         "custom_url_flag": {
             "args": ["--url", "https://pytest.org"],
